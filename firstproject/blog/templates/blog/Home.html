@@ -1,0 +1,38 @@
+{% extends "blog/base.html "%}
+{% block content %}
+    <div class="row">
+        <div class="col-11 w3-right">
+            {% if user.is_authenticated %}
+            <a href="{% url 'create-post' %}"><button type="submit" class="btn btn-primary">Create A Post</button></a>
+            {% endif %}
+        </div>
+    </div>
+    
+    {%for posts in page.object_list %}
+    <div class="row">
+        <div class="col-1">
+            <img src="{{posts.author.profile.image.url}}" alt="{{posts.author.first_name}} photo" width="60" height="60" class="rounded-circle mt-4">
+        </div>
+        <div class="col-11">
+            <a href="{% url 'read-post' posts.id %}"><h1>{{posts.title}}</h1></a>
+            <h4>{{posts.content}}</h4>
+            <p>Posted By {{posts.author}} on {{posts.date}}</p>
+        </div>
+        <div class="col-11 w3-center">
+            {% if posts.author == user %}
+            <a href="{% url 'delete-post' posts.id %}"><button type="submit" class="btn btn-danger">Delete</button></a>
+            <a href="{% url 'update-post' posts.id %}"><button type="submit" class="btn btn-success">Update</button></a>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    {%endfor%}
+    <div>
+        {% if page.has_previous %}
+        <a href="{% url 'blog-home' %}?page={{ page.previous_page_number}}"><button class="btn btn-outline-danger" type="button">Previous</button></a>
+        {% endif %}
+        {% if page.has_next %}
+        <a href="{% url 'blog-home' %}?page={{ page.next_page_number}}"><button class="btn btn-outline-success" type="button">Next</button></a>
+        {% endif %}
+    </div>
+{% endblock content %}

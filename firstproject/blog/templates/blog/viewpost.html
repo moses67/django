@@ -1,0 +1,13 @@
+{% extends "blog/base.html "%}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <img src="{{post.author.profile.image.url}}" alt="" width="100px" height="100px">
+    </div>
+</div>
+<div class="col-12 border">
+    <h3>{{ post.title }}</h3>
+    <h5>{{ post.content }}</h5>
+    <p>{{ post.author }}</p>
+</div>
+{% endblock content %}
